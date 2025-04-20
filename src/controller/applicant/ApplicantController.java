@@ -5,6 +5,7 @@ import container.*;
 import entity.*;
 import utils.BackButton;
 import utils.ClearScreen;
+import utils.Colour;
 import controller.PasswordService;
 
 import java.util.InputMismatchException;
@@ -61,7 +62,7 @@ public class ApplicantController {
             }
             catch(InputMismatchException e){
                 ClearScreen.clear();
-                System.out.println("Please input an integer!");
+                System.out.println(Colour.RED + "Please input an integer!" + Colour.RESET);
                 BackButton.goBack();
                 scanner.nextLine();
                 continue;
@@ -93,18 +94,15 @@ public class ApplicantController {
                 case 8:
                     enquiryHandler.deleteEnquiry();
                     break;
-
-
                 // Should have a class called PasswordService -> avoid violate Single-Responsibility Principle
                 case 9:
                     PasswordService.changePassWord(applicant);
-                    BackButton.goBack();
                     return;
                 case 10:
                     System.out.println("Logging out...");
                     break;
                 default:
-                    System.out.println("Invalid choice! Please enter a valid option.");
+                    System.out.println(Colour.RED + "Invalid choice! Please enter a valid option." + Colour.RESET);
             }
             BackButton.goBack();
         }

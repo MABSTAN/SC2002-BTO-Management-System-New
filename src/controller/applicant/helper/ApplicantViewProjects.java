@@ -3,6 +3,7 @@ import container.*;
 import controller.applicant.template.IApplicantViewProjects;
 import entity.*;
 import utils.ClearScreen;
+import utils.Colour;
 
 import java.util.Date;
 import java.util.InputMismatchException;
@@ -61,24 +62,24 @@ public class ApplicantViewProjects implements IApplicantViewProjects{
         Project project = projectList.getProjectByName(projectName);
 
         if (project == null){
-            System.out.println("Project not found.");
+            System.out.println(Colour.RED +"Project not found." + Colour.RESET);
             return;
         }
         Application currentApp = applicant.getCurrentApplication();
         if (currentApp != null && currentApp.getApplicationStatus() != Application.ApplicationStatus.UNSUCCESSFUL) {
-            System.out.println("You already have an active application.");
+            System.out.println(Colour.RED + "You already have an active application." + Colour.RESET);
             return;
         }
 
         if (project.getOpeningDate().after(new Date())){
-            System.out.println("The project is currently not open for application.");
+            System.out.println(Colour.RED + "The project is currently not open for application." + Colour.RESET);
             return;
         }
     
         Application.FlatType selectedFlatType;
         //
         if(applicant.getMaritalStatus() == User.MaritalStatus.SINGLE && applicant.getAge() >= 35){
-            System.out.println("You are only eligible to apply for 2-ROOM flat");
+            System.out.println(Colour.YELLOW + "You are only eligible to apply for 2-ROOM flat" + Colour.RESET);
             selectedFlatType = Application.FlatType.TWOROOM;
         }
         else{
@@ -92,27 +93,27 @@ public class ApplicantViewProjects implements IApplicantViewProjects{
             }
             catch(InputMismatchException e){
                 ClearScreen.clear();
-                System.out.println("Please input an integer!");
+                System.out.println(Colour.RED + "Please input an integer!" + Colour.RESET);
                 sc.nextLine();
                 return;
             }
             sc.nextLine();
             if (choice  == 1) {
                 if(project.getAvailableTwoRoom() == 0){
-                    System.out.println("Sorry, there is not any 2-room flats");
+                    System.out.println(Colour.YELLOW + "Sorry, there is not any 2-room flats" + Colour.RESET);
                     return;
                 }
                 selectedFlatType = Application.FlatType.TWOROOM;
             }
             else if (choice == 2) {
                 if(project.getAvailableThreeRoom() == 0){
-                    System.out.println("Sorry, there is not any 3-room flats");
+                    System.out.println(Colour.YELLOW + "Sorry, there is not any 3-room flats" + Colour.RESET);
                     return;
                 }
                 selectedFlatType = Application.FlatType.THREEROOM;
             }
             else {
-                System.out.println("Invalid choice. Application cancelled.");
+                System.out.println(Colour.RED + "Invalid choice. Application cancelled." + Colour.RESET);
                 return;
             }
         }
@@ -122,7 +123,7 @@ public class ApplicantViewProjects implements IApplicantViewProjects{
         applicationList.addApplication(newApplication);
         applicant.addApplication(newApplication);
         applicant.setCurrentApplication(newApplication);
-        System.out.println("Application submitted successfully!");
+        System.out.println(Colour.GREEN + "Application submitted successfully!" + Colour.RESET);
     }
 
 }

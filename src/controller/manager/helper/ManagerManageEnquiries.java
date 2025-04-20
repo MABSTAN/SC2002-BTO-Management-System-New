@@ -2,6 +2,7 @@ package controller.manager.helper;
 import java.util.ArrayList;
 import java.util.Scanner;
 import entity.*;
+import utils.Colour;
 import container.*;
 import controller.manager.template.IManagerManageEnquiries;
 public class ManagerManageEnquiries implements IManagerManageEnquiries{
@@ -17,7 +18,7 @@ public class ManagerManageEnquiries implements IManagerManageEnquiries{
     public void viewEnquiry() {
         ArrayList<Enquiry> enquiries = enquiryList.getEnquiries();
         if (enquiries.isEmpty()) {
-            System.out.println("No enquiries found.");
+            System.out.println(Colour.RED + "No enquiries found." + Colour.RESET);
             return;
         }
 
@@ -31,7 +32,7 @@ public class ManagerManageEnquiries implements IManagerManageEnquiries{
     public void viewHandledProjectEnquiry(Project currentProject) {
         ArrayList<Enquiry> enquiries = enquiryList.getEnquiriesByProject(currentProject);
         if (enquiries.isEmpty()) {
-            System.out.println("No enquiries for your project.");
+            System.out.println(Colour.RED + "No enquiries for your project." + Colour.RESET);
             return;
         }
 
@@ -45,7 +46,7 @@ public class ManagerManageEnquiries implements IManagerManageEnquiries{
     public void replyHandledProjectEnquiry(Project currentProject) {
         ArrayList<Enquiry> pendingEnquiries = enquiryList.getPendingEnquiriesByProject(currentProject);
         if (pendingEnquiries.isEmpty()) {
-            System.out.println("No pending enquiries for your project.");
+            System.out.println(Colour.RED + "No pending enquiries for your project." + Colour.RESET);
             return;
         }
 
@@ -59,12 +60,12 @@ public class ManagerManageEnquiries implements IManagerManageEnquiries{
         try {
             choice = Integer.parseInt(scanner.nextLine()) - 1;
         } catch (NumberFormatException e) {
-            System.out.println("Invalid input.");
+            System.out.println(Colour.RED + "Invalid input." + Colour.RESET);
             return;
         }
 
         if (choice < 0 || choice >= pendingEnquiries.size()) {
-            System.out.println("Invalid choice.");
+            System.out.println(Colour.RED + "Invalid choice." + Colour.RESET);
             return;
         }
 
@@ -74,6 +75,6 @@ public class ManagerManageEnquiries implements IManagerManageEnquiries{
         enquiry.setReply(reply);
         enquiry.setStatus(Enquiry.EnquiryStatus.RESPONDED);
 
-        System.out.println("Enquiry replied successfully.");
+        System.out.println(Colour.GREEN + "Enquiry replied successfully." + Colour.RESET);
     }
 }

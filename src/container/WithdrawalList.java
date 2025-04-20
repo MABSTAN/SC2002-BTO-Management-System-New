@@ -2,6 +2,7 @@ package container;
 import entity.*;
 import utils.CSVReader;
 import utils.CSVWriter;
+import utils.Colour;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,7 +47,7 @@ public class WithdrawalList {
 
     public void addWithdrawal(Withdrawal withdrawal) {
         withdrawals.add(withdrawal);
-        System.out.println("Withdrawal request submitted.");
+        System.out.println(Colour.GREEN + "Withdrawal request submitted." + Colour.RESET);
     }
 
     public void viewWithdrawalsByApplicant(Applicant applicant) {

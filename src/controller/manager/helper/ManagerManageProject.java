@@ -2,6 +2,7 @@ package controller.manager.helper;
 import entity.*;
 import utils.BackButton;
 import utils.ClearScreen;
+import utils.Colour;
 import container.*;
 
 import java.text.ParseException;
@@ -29,7 +30,7 @@ public class ManagerManageProject implements IManagerManageProject{
 
     public void createProject() {
         if (manager.getActiveProject() != null) {
-            System.out.println("You are already handling an active project: " + manager.getActiveProject().getProjectName());
+            System.out.println(Colour.RED + "You are already handling an active project: " + Colour.RESET + manager.getActiveProject().getProjectName());
             System.out.println("You must finish managing the current project before creating a new one!");
             return;
         }
@@ -39,7 +40,7 @@ public class ManagerManageProject implements IManagerManageProject{
              System.out.print("Enter Project Name: ");
              name = scanner.nextLine();
              if (projectList.getProjectByName(name) != null) {
-                 System.out.println("A project with this name already exists. Please enter a different name.");
+                 System.out.println(Colour.RED + "A project with this name already exists. Please enter a different name." + Colour.RESET);
              } else {break;}
          }
 
@@ -57,7 +58,7 @@ public class ManagerManageProject implements IManagerManageProject{
                 twoRoom = Integer.parseInt(input);
                 validInput = true;
             } catch (NumberFormatException e) {
-                System.out.println("Please input a valid integer!");
+                System.out.println(Colour.RED + "Please input a valid integer!" + Colour.RESET);
             }
         }
 
@@ -69,7 +70,7 @@ public class ManagerManageProject implements IManagerManageProject{
                 sellingPriceTwoRoom = Integer.parseInt(input);
                 validInput = true;
             } catch (NumberFormatException e) {
-                System.out.println("Please input a valid integer!");
+                System.out.println(Colour.RED + "Please input a valid integer!" + Colour.RESET);
             }
         }
 
@@ -81,7 +82,7 @@ public class ManagerManageProject implements IManagerManageProject{
                 threeRoom = Integer.parseInt(input);
                 validInput = true;
             } catch (NumberFormatException e) {
-                System.out.println("Please input a valid integer!");
+                System.out.println(Colour.RED + "Please input a valid integer!" + Colour.RESET);
             }
         }
 
@@ -93,7 +94,7 @@ public class ManagerManageProject implements IManagerManageProject{
                 sellingPriceThreeRoom = Integer.parseInt(input);
                 validInput = true;
             } catch (NumberFormatException e) {
-                System.out.println("Please input a valid integer!");
+                System.out.println(Colour.RED + "Please input a valid integer!" + Colour.RESET);
             }
         }
 
@@ -108,7 +109,7 @@ public class ManagerManageProject implements IManagerManageProject{
                 openDate = sdf.parse(dateInput);
                 validInput = true;
             } catch (ParseException e) {
-                System.out.println("Invalid date format. Please use yyyy-MM-dd.");
+                System.out.println(Colour.RED + "Invalid date format. Please use yyyy-MM-dd." + Colour.RESET);
             }
         }
 
@@ -120,7 +121,7 @@ public class ManagerManageProject implements IManagerManageProject{
                 closeDate = sdf.parse(dateInput);
                 validInput = true;
             } catch (ParseException e) {
-                System.out.println("Invalid date format. Please use yyyy-MM-dd.");
+                System.out.println(Colour.RED + "Invalid date format. Please use yyyy-MM-dd." + Colour.RESET);
             }
         }
 
@@ -133,7 +134,7 @@ public class ManagerManageProject implements IManagerManageProject{
                 maxOfficer = Integer.parseInt(input);
                 validInput = true;
             } catch (NumberFormatException e) {
-                System.out.println("Please input a valid integer!");
+                System.out.println(Colour.RED + "Please input a valid integer!" + Colour.RESET);
             }
         }
 
@@ -147,7 +148,7 @@ public class ManagerManageProject implements IManagerManageProject{
         }
 
         projectList.addProject(project);
-        System.out.println("Project created successfully.");
+        System.out.println(Colour.GREEN + "Project created successfully." + Colour.RESET);
     }
 
     public void editProject() {
@@ -156,7 +157,7 @@ public class ManagerManageProject implements IManagerManageProject{
 
         Project project = projectList.getProjectByName(name);
         if (project == null || !manager.getManagedProjects().contains(project)) {
-            System.out.println("Project not found or not owned by you.");
+            System.out.println(Colour.RED + "Project not found or not owned by you." + Colour.RESET);
             return;
         }
 
@@ -181,7 +182,7 @@ public class ManagerManageProject implements IManagerManageProject{
             }
             catch(InputMismatchException e){
                 ClearScreen.clear();
-                System.out.println("Please input an integer!");
+                System.out.println(Colour.RED + "Please input an integer!" + Colour.RESET);
                 BackButton.goBack();
                 scanner.nextLine();
                 continue;
@@ -223,9 +224,9 @@ public class ManagerManageProject implements IManagerManageProject{
                         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                         Date newOpenDate = sdf.parse(openDateStr);
                         project.setOpeningDate(newOpenDate);
-                        System.out.println("Opening date updated.");
+                        System.out.println(Colour.GREEN + "Opening date updated." + Colour.RESET);
                     } catch (ParseException e) {
-                        System.out.println("Invalid date format. Please use yyyy-MM-dd.");
+                        System.out.println(Colour.RED + "Invalid date format. Please use yyyy-MM-dd." + Colour.RESET);
                     }
                     break;
 
@@ -236,9 +237,9 @@ public class ManagerManageProject implements IManagerManageProject{
                         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                         Date newCloseDate = sdf.parse(closeDateStr);
                         project.setClosingDate(newCloseDate);
-                        System.out.println("Closing date updated.");
+                        System.out.println(Colour.GREEN + "Closing date updated." + Colour.RESET);
                     } catch (ParseException e) {
-                        System.out.println("Invalid date format. Please use yyyy-MM-dd.");
+                        System.out.println(Colour.RED + "Invalid date format. Please use yyyy-MM-dd." + Colour.RESET);
                     }
                     break;
 
@@ -248,10 +249,10 @@ public class ManagerManageProject implements IManagerManageProject{
                     scanner.nextLine();
                     break;
                 case 9:
-                    System.out.println("Edit complete.");
+                    System.out.println(Colour.GREEN + "Edit complete." + Colour.RESET);
                     return;
                 default:
-                    System.out.println("Invalid choice! Please enter a valid option.");
+                    System.out.println(Colour.RED + "Invalid choice! Please enter a valid option." + Colour.RESET);
             }
         }
     }
@@ -262,7 +263,7 @@ public class ManagerManageProject implements IManagerManageProject{
 
         Project project = projectList.getProjectByName(name);
         if (project == null || !manager.getManagedProjects().contains(project)) {
-            System.out.println("Project not found or not managed by you.");
+            System.out.println(Colour.RED + "Project not found or not managed by you." + Colour.RESET);
             return;
         }
 
@@ -270,18 +271,8 @@ public class ManagerManageProject implements IManagerManageProject{
         applicationList.removeApplicationsByProject(project);
 
         // 2. Remove related registrations
-
-        // registrationList.removeRegistrationByProject(project);
-        ArrayList<Registration> registrationsToRemove = registrationList.getRegistrations();
-        for (Registration reg : registrationsToRemove) {
-            if (reg.getProject().equals(project)) {
-                // Remove from officer's registrations
-                Officer officer = reg.getOfficer();
-                officer.getRegistrations().remove(reg);
-            }
-        }
         registrationList.removeRegistrationByProject(project);
-        registrationList.saveToCSV(); // Save updated RegistrationList to CSV
+
         // 3. Clear officer project references
         for (Officer officer : project.getOfficers()) {
             if (officer.getAssignedProject() != null && officer.getAssignedProject().equals(project)) {
@@ -309,18 +300,18 @@ public class ManagerManageProject implements IManagerManageProject{
 
         Project project = projectList.getProjectByName(name);
         if (project == null || !manager.getManagedProjects().contains(project)) {
-            System.out.println("Project not found or not managed by you.");
+            System.out.println(Colour.RED + "Project not found or not managed by you." + Colour.RESET);
             return;
         }
 
         project.setVisibility(!project.getVisibility());
-        System.out.println("Visibility updated: " + (project.getVisibility() ? "Visible" : "Hidden"));
+        System.out.println(Colour.GREEN + "Visibility updated: " + (project.getVisibility() ? "Visible" : "Hidden" ) + Colour.RESET);
     }
 
     public void viewOwnProject() {
         ArrayList<Project> myProjects = manager.getManagedProjects();
         if (myProjects.isEmpty()) {
-            System.out.println("You have not created any projects.");
+            System.out.println(Colour.RED + "You have not created any projects." + Colour.RESET);
             return;
         }
 

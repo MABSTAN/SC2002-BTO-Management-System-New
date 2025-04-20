@@ -6,6 +6,7 @@ import container.*;
 import entity.*;
 import utils.BackButton;
 import utils.ClearScreen;
+import utils.Colour;
 import controller.PasswordService;
 
 import java.util.InputMismatchException;
@@ -31,7 +32,7 @@ public class OfficerController {
     private IOfficerManageEnquiries manageEnquiriesHandler;
     private IOfficerManageProject manageProjectHandler;
     private IOfficerManageApplication manageApplicationHandler;
-    // private IOfficerGenerateReceipt receiptHandler;
+    private IOfficerGenerateReceipt receiptHandler;
 
     public OfficerController(Officer officer, ProjectList projectList,
                              ApplicationList applicationList, EnquiryList enquiryList,
@@ -55,7 +56,7 @@ public class OfficerController {
         this.manageEnquiriesHandler = new OfficerManageEnquiries(officer, enquiryList);
         this.manageProjectHandler = new OfficerManageProject(officer, projectList);
         this.manageApplicationHandler = new OfficerManageApplication(officer, applicationList);
-        // this.receiptHandler = new OfficerGenerateReceipt(officer);
+        this.receiptHandler = new OfficerGenerateReceipt(officer);
     }
 
     public void showMenu() {
@@ -76,7 +77,7 @@ public class OfficerController {
             }
             catch(InputMismatchException e){
                 ClearScreen.clear();
-                System.out.println("Please input an integer!");
+                System.out.println(Colour.RED + "Please input an integer!" + Colour.RESET);
                 BackButton.goBack();
                 scanner.nextLine();
                 continue;
@@ -94,18 +95,16 @@ public class OfficerController {
                     showOfficerManagementMenu();
                     break;
                 // Add change password feature:
-
                 case 4:
                     /* Logic here */
                     PasswordService.changePassWord(officer);
-                    BackButton.goBack();
                     return;
                 case 5:
                     System.out.println("Logging out...");
                     BackButton.goBack();
                     break;
                 default:
-                    System.out.println("Invalid choice! Please choose a valid option");
+                    System.out.println(Colour.RED + "Invalid choice! Please choose a valid option" + Colour.RESET);
                     BackButton.goBack();
             }
 
@@ -134,7 +133,7 @@ public class OfficerController {
             }
             catch(InputMismatchException e){
                 ClearScreen.clear();
-                System.out.println("Please input an integer!");
+                System.out.println(Colour.RED + "Please input an integer!" + Colour.RESET);
                 BackButton.goBack();
                 scanner.nextLine();
                 continue;
@@ -155,7 +154,7 @@ public class OfficerController {
                     return;
                 default:
                     ClearScreen.clear();
-                    System.out.println("Invalid choice! Please choose a valid option");
+                    System.out.println(Colour.RED + "Invalid choice! Please choose a valid option" + Colour.RESET);
             }
             BackButton.goBack();
         } while (true);
@@ -177,7 +176,7 @@ public class OfficerController {
             }
             catch(InputMismatchException e){
                 ClearScreen.clear();
-                System.out.println("Please input an integer!");
+                System.out.println(Colour.RED + "Please input an integer!" + Colour.RESET);
                 BackButton.goBack();
                 scanner.nextLine();
                 continue;
@@ -192,7 +191,7 @@ public class OfficerController {
                     return;
                 default:
                     ClearScreen.clear();
-                    System.out.println("Invalid choice! Please choose a valid option.");
+                    System.out.println(Colour.RED + "Invalid choice! Please choose a valid option." + Colour.RESET);
             }
             BackButton.goBack();
         } while (true);
@@ -200,7 +199,7 @@ public class OfficerController {
 
     private void showOfficerManagementMenu() {
         if (officer.getAssignedProject() == null) {
-            System.out.println("You do not have an active project. Cannot manage officer responsibilities.");
+            System.out.println(Colour.YELLOW + "You do not have an active project. Cannot manage officer responsibilities." + Colour.RESET);
             BackButton.goBack();
             return;
         }
@@ -215,10 +214,8 @@ public class OfficerController {
             System.out.println("            |  3) View Project Details                        |");
             System.out.println("            |  4) View Applications                           |");
             System.out.println("            |  5) Update Applicant Profile                    |");
-
-            // System.out.println("            |  6) Generate Receipt                            |");
-
-            System.out.println("            |  6) Back                                        |");
+            System.out.println("            |  6) Generate Receipt                            |");
+            System.out.println("            |  7) Back                                        |");
             System.out.println("            +--------------------------------------------------+\n\n");
             System.out.print("Enter choice: ");
             try{
@@ -226,7 +223,7 @@ public class OfficerController {
             }
             catch(InputMismatchException e){
                 ClearScreen.clear();
-                System.out.println("Please input an integer!");
+                System.out.println(Colour.RED + "Please input an integer!" + Colour.RESET);
                 BackButton.goBack();
                 scanner.nextLine();
                 continue;
@@ -239,13 +236,13 @@ public class OfficerController {
                 case 3: manageProjectHandler.viewProjectDetails(); break;
                 case 4: manageApplicationHandler.viewApplications(); break;
                 case 5: manageApplicationHandler.updateApplicationStatus(); break;
-                // case 6: receiptHandler.generateReceipt(); break;
-                case 6:
+                case 6: receiptHandler.generateReceipt(); break;
+                case 7:
                     ClearScreen.clear();
                     return;
                 default:
                     ClearScreen.clear();
-                    System.out.println("Invalid choice! Please choose a valid option.");
+                    System.out.println(Colour.RED + "Invalid choice! Please choose a valid option." + Colour.RESET);
             }
             BackButton.goBack();
         } while (true);

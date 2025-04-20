@@ -26,7 +26,6 @@ public abstract class User {
     }
 
     //Getter Setter
-
     public void setName(String name){
         this.name = name;
     }

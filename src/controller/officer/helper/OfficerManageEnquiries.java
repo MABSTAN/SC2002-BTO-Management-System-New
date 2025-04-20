@@ -2,6 +2,7 @@ package controller.officer.helper;
 import container.*;
 import entity.*;
 import utils.ClearScreen;
+import utils.Colour;
 
 import java.util.Scanner;
 import java.util.ArrayList;
@@ -22,13 +23,13 @@ public class OfficerManageEnquiries implements IOfficerManageEnquiries{
     public void viewEnquiries() {
         Project assignedProject = officer.getAssignedProject();
         if (assignedProject == null) {
-            System.out.println("You are not assigned to any project.");
+            System.out.println(Colour.RED + "You are not assigned to any project." + Colour.RESET);
             return;
         }
 
         ArrayList<Enquiry> enquiries = enquiryList.getEnquiriesByProject(assignedProject);
         if (enquiries.isEmpty()) {
-            System.out.println("No enquiries found for your project.");
+            System.out.println(Colour.RED + "No enquiries found for your project." + Colour.RESET);
             return;
         }
 
@@ -42,13 +43,13 @@ public class OfficerManageEnquiries implements IOfficerManageEnquiries{
     public void replyToEnquiry() {
         Project assignedProject = officer.getAssignedProject();
         if (assignedProject == null) {
-            System.out.println("You are not assigned to any project.");
+            System.out.println(Colour.RED + "You are not assigned to any project." + Colour.RESET);
             return;
         }
 
         ArrayList<Enquiry> enquiries = enquiryList.getEnquiriesByProject(assignedProject);
         if (enquiries.isEmpty()) {
-            System.out.println("No enquiries to reply to.");
+            System.out.println(Colour.RED + "No enquiries to reply to." + Colour.RESET);
             return;
         }
 
@@ -61,14 +62,14 @@ public class OfficerManageEnquiries implements IOfficerManageEnquiries{
         }
         catch(InputMismatchException e){
             ClearScreen.clear();
-            System.out.println("Please input an integer!");
+            System.out.println(Colour.RED + "Please input an integer!" + Colour.RESET);
             scanner.nextLine();
             return;
         }
         scanner.nextLine();
 
         if (choice < 1 || choice > enquiries.size()) {
-            System.out.println("Invalid selection.");
+            System.out.println(Colour.RED + "Invalid selection." + Colour.RESET);
             return;
         }
 
@@ -79,6 +80,6 @@ public class OfficerManageEnquiries implements IOfficerManageEnquiries{
 
         selectedEnquiry.setReply(reply);
         selectedEnquiry.setStatus(Enquiry.EnquiryStatus.RESPONDED);
-        System.out.println("Reply sent successfully.");
+        System.out.println(Colour.GREEN + "Reply sent successfully." + Colour.RESET);
     }
 }

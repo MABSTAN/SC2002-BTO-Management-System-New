@@ -2,6 +2,7 @@ package container;
 import entity.*;
 import utils.CSVReader;
 import utils.CSVWriter;
+import utils.Colour;
 
 import java.util.*;
 
@@ -69,7 +70,7 @@ public class RegistrationList {
 
     public void removeRegistrationByProject(Project project) {
         registrationList.removeIf(reg -> reg.getProject().equals(project));
-        System.out.println("All registrations for project '" + project.getProjectName() + "' have been removed.");
+        System.out.println(Colour.GREEN + "All registrations for project '" + project.getProjectName() + "' have been removed." + Colour.RESET);
     }
 
     public ArrayList<Registration> getPendingRegistrationsByProject(Project project) {

@@ -2,6 +2,7 @@ package controller.applicant.helper;
 import container.*;
 import entity.*;
 import utils.BackButton;
+import utils.Colour;
 import utils.ClearScreen;
 
 import java.util.ArrayList;
@@ -30,14 +31,14 @@ public class ApplicantMakeEnquiry implements IApplicantMakeEnquiry{
             index++;
         }
 
-        System.out.print("Enter the project numbner: ");
+        System.out.print("Enter the project number: ");
         int choice;
         try{
             choice = sc.nextInt();
         }
         catch(InputMismatchException e){
             ClearScreen.clear();
-            System.out.println("Please input an integer!");
+            System.out.println(Colour.RED + "Please input an integer!" + Colour.RESET);
             sc.nextLine();
             return;
         }
@@ -51,7 +52,7 @@ public class ApplicantMakeEnquiry implements IApplicantMakeEnquiry{
         Enquiry enquiry = new Enquiry(applicant, project, message);
         enquiryList.addEnquiry(enquiry);
 
-        System.out.println("\nSuccess Enquiry!");
+        System.out.println(Colour.GREEN + "\nSuccess Enquiry!" + Colour.RESET);
         // BackButton.goBack();
     }
 
@@ -68,7 +69,7 @@ public class ApplicantMakeEnquiry implements IApplicantMakeEnquiry{
             }
         }
         if(found == false){
-            System.out.println("No enquiries found.");
+            System.out.println(Colour.RED + "No enquiries found." + Colour.RESET);
         }
 
         // BackButton.goBack();
@@ -88,7 +89,7 @@ public class ApplicantMakeEnquiry implements IApplicantMakeEnquiry{
         }
 
         if (applicantEnquiries.isEmpty()) {
-            System.out.println("No pending enquiries to edit.");
+            System.out.println(Colour.YELLOW + "No pending enquiries to edit." + Colour.RESET);
             // BackButton.goBack();
             return;
         }
@@ -100,14 +101,14 @@ public class ApplicantMakeEnquiry implements IApplicantMakeEnquiry{
         }
         catch(InputMismatchException e){
             ClearScreen.clear();
-            System.out.println("Please input an integer!");
+            System.out.println(Colour.RED + "Please input an integer!" + Colour.RESET);
             sc.nextLine();
             return;
         }
         sc.nextLine();
 
         if (choice < 1 || choice > applicantEnquiries.size()) {
-            System.out.println("Invalid choice.");
+            System.out.println(Colour.RED + "Invalid choice." + Colour.RESET);
             // BackButton.goBack();
             return;
         }
@@ -116,7 +117,7 @@ public class ApplicantMakeEnquiry implements IApplicantMakeEnquiry{
         String message = sc.nextLine();
         applicantEnquiries.get(choice - 1).setMessage(message);
 
-        System.out.println("Enquiry updated.");
+        System.out.println(Colour.GREEN + "Enquiry updated." + Colour.RESET);
         // BackButton.goBack();
     }
 
@@ -134,7 +135,7 @@ public class ApplicantMakeEnquiry implements IApplicantMakeEnquiry{
         }
 
         if (applicantEnquiries.isEmpty()) {
-            System.out.println("No pending enquiries to delete.");
+            System.out.println(Colour.RED + "No pending enquiries to delete." + Colour.RESET);
             // BackButton.goBack();
             return;
         }
@@ -146,20 +147,20 @@ public class ApplicantMakeEnquiry implements IApplicantMakeEnquiry{
         }
         catch(InputMismatchException e){
             ClearScreen.clear();
-            System.out.println("Please input an integer!");
+            System.out.println(Colour.RED + "Please input an integer!" + Colour.RESET);
             sc.nextLine();
             return;
         }
         sc.nextLine();
 
         if (choice < 1 || choice > applicantEnquiries.size()) {
-            System.out.println("Invalid choice.");
+            System.out.println(Colour.RED + "Invalid choice." + Colour.RESET);
             // BackButton.goBack();
             return;
         }
 
         enquiryList.removeEnquiry(applicantEnquiries.get(choice - 1));
-        System.out.println("Enquiry deleted.");
+        System.out.println(Colour.GREEN + "Enquiry deleted." + Colour.RESET);
         // BackButton.goBack();
     }
 

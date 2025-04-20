@@ -1,5 +1,6 @@
 package controller.manager.helper;
 import entity.*;
+import utils.Colour;
 import container.*;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -17,7 +18,7 @@ public class ManagerManageRegistration implements IManagerManageRegistration{
     public void viewRegistration() {
         ArrayList<Registration> allRegistrations = registrationList.getRegistrations();
         if (allRegistrations.isEmpty()) {
-            System.out.println("No registrations found.");
+            System.out.println(Colour.RED + "No registrations found." + Colour.RESET);
             return;
         }
 
@@ -32,7 +33,7 @@ public class ManagerManageRegistration implements IManagerManageRegistration{
         ArrayList<Registration> pendingRegistrations = registrationList.getPendingRegistrationsByProject(project);
 
         if (pendingRegistrations.isEmpty()) {
-            System.out.println("No pending registrations for this project.");
+            System.out.println(Colour.RED + "No pending registrations for this project." + Colour.RESET);
             return;
         }
 
@@ -46,12 +47,12 @@ public class ManagerManageRegistration implements IManagerManageRegistration{
         try {
             choice = Integer.parseInt(scanner.nextLine()) - 1;
         } catch (NumberFormatException e) {
-            System.out.println("Invalid input.");
+            System.out.println(Colour.RED + "Invalid input." + Colour.RESET);
             return;
         }
 
         if (choice < 0 || choice >= pendingRegistrations.size()) {
-            System.out.println("Invalid choice.");
+            System.out.println(Colour.RED + "Invalid choice." + Colour.RESET);
             return;
         }
 
@@ -68,16 +69,16 @@ public class ManagerManageRegistration implements IManagerManageRegistration{
                 project.addOfficers(selectedReg.getOfficer());
                 System.out.println("Updated officers for project " + project.getProjectName() + ": " + project.getOfficers());
                 selectedReg.getOfficer().setAssignedProject(project);
-                System.out.println("Officer registration approved.");
+                System.out.println(Colour.GREEN + "Officer registration approved." + Colour.RESET);
             } else if (action.equals("2")) {
                 selectedReg.setStatus(Registration.RegistrationStatus.REJECTED);
-                System.out.println("Officer registration rejected.");
+                System.out.println(Colour.RED + "Officer registration rejected." + Colour.RESET);
             } else {
-                System.out.println("Invalid action.");
+                System.out.println(Colour.RED + "Invalid action." + Colour.RESET);
             }
         } else {
             selectedReg.setStatus(Registration.RegistrationStatus.REJECTED);
-            System.out.println("Officer slots full. Registration rejected.");
+            System.out.println("Officer slots full." + Colour.RED + "Registration rejected." + Colour.RESET);
         }
     }
 }

@@ -2,6 +2,7 @@ package controller.officer.helper;
 import container.*;
 import entity.*;
 import utils.ClearScreen;
+import utils.Colour;
 
 import java.util.InputMismatchException;
 import java.util.List;
@@ -21,7 +22,7 @@ public class OfficerManageApplication implements IOfficerManageApplication{
     public void viewApplications() {
         Project assignedProject = officer.getAssignedProject();
         if (assignedProject == null) {
-            System.out.println("You are not assigned to any project.");
+            System.out.println(Colour.RED + "You are not assigned to any project." + Colour.RESET);
             return;
         }
 
@@ -37,7 +38,7 @@ public class OfficerManageApplication implements IOfficerManageApplication{
         }
 
         if (!found) {
-            System.out.println("No successful applications found for your project.");
+            System.out.println(Colour.RED + "No successful applications found for your project." + Colour.RESET);
         }
     }
 
@@ -45,7 +46,7 @@ public class OfficerManageApplication implements IOfficerManageApplication{
     public void updateApplicationStatus() {
         Project assignedProject = officer.getAssignedProject();
         if (assignedProject == null) {
-            System.out.println("You are not assigned to any project.");
+            System.out.println(Colour.RED + "You are not assigned to any project." + Colour.RESET);
             return;
         }
 
@@ -57,14 +58,14 @@ public class OfficerManageApplication implements IOfficerManageApplication{
                 .toList();
 
         if (successfulApplication.isEmpty()) {
-            System.out.println("No successful applications to update.");
+            System.out.println(Colour.RED + "No successful applications to update." + Colour.RESET);
             return;
         }
 
         // Display NRICs
         System.out.println("\n=== Successful Applications (Eligible for Booking) ===");
         for (int i = 0; i < successfulApplication.size(); i++) {
-            System.out.println((i + 1) + ") " + successfulApplication.get(i).getApplicant().getName() + ": " + successfulApplication.get(i).getApplicant().getNric());
+            System.out.println((i + 1) + ") " + successfulApplication.get(i).getApplicant().getNric());
         }
 
         System.out.print("Select an application to book (enter number or 0 to cancel): ");
@@ -74,14 +75,14 @@ public class OfficerManageApplication implements IOfficerManageApplication{
         }
         catch(InputMismatchException e){
             ClearScreen.clear();
-            System.out.println("Please input an integer!");
+            System.out.println(Colour.RED + "Please input an integer!" + Colour.RESET);
             scanner.nextLine();
             return;
         }
         scanner.nextLine();
 
         if (choice <= 0 || choice > successfulApplication.size()) {
-            System.out.println("Cancelled or invalid choice.");
+            System.out.println(Colour.RED + "Cancelled or invalid choice." + Colour.RESET);
             return;
         }
 
@@ -102,8 +103,8 @@ public class OfficerManageApplication implements IOfficerManageApplication{
             // }
             assignedProject.setAvailableTwoRoom(current - 1);
             selectedApplication.setBookedFlat(true);
-            System.out.println("Success!");
-
+            System.out.println(Colour.GREEN + "Success!" + Colour.RESET);
+            
         }
         else if (type == Application.FlatType.THREEROOM) {
             int current = assignedProject.getAvailableThreeRoom();
@@ -117,12 +118,15 @@ public class OfficerManageApplication implements IOfficerManageApplication{
             // }
             assignedProject.setAvailableThreeRoom(current - 1);
             selectedApplication.setBookedFlat(true);
-            System.out.println("Success!");
+            System.out.println(Colour.GREEN + "Success!" + Colour.RESET);
         }
         // Update application status:
         selectedApplication.setApplicationStatus(Application.ApplicationStatus.BOOKED);
         // Use-a relationship:
-        OfficerGenerateReceipt receiptHandler = new OfficerGenerateReceipt(officer, selectedApplication);
+        OfficerGenerateReceipt receiptHandler = new OfficerGenerateReceipt(officer);
         receiptHandler.generateReceipt();
+
+        // selectedApplication.setApplicationStatus(Application.ApplicationStatus.BOOKED);
+        // System.out.println("Application status updated to BOOKED and flat availability adjusted.");
     }
 }

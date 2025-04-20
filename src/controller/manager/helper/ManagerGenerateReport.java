@@ -6,6 +6,7 @@ import container.*;
 import entity.*;
 import utils.BackButton;
 import utils.ClearScreen;
+import utils.Colour;
 import controller.manager.template.IManagerGenerateReport;
 public class ManagerGenerateReport implements IManagerGenerateReport{
     private ApplicationList applicationList;
@@ -32,7 +33,7 @@ public class ManagerGenerateReport implements IManagerGenerateReport{
         }
         catch(InputMismatchException e){
             ClearScreen.clear();
-            System.out.println("Please input an integer!");
+            System.out.println(Colour.RED + "Please input an integer!" + Colour.RESET);
             BackButton.goBack();
             scanner.nextLine();
             return;
@@ -52,13 +53,13 @@ public class ManagerGenerateReport implements IManagerGenerateReport{
                 filterByProjectName();
                 break;
             default:
-                System.out.println("Invalid choice!Please enter a valid option");
+                System.out.println(Colour.RED + "Invalid choice! Please enter a valid option" + Colour.RESET);
         }
     }
 
     private void printReport(ArrayList<Application> applications) {
         if (applications.isEmpty()) {
-            System.out.println("No bookings found.");
+            System.out.println(Colour.RED + "No bookings found." + Colour.RESET);
             return;
         }
 
@@ -89,7 +90,7 @@ public class ManagerGenerateReport implements IManagerGenerateReport{
             }
             printReport(filtered);
         } catch (IllegalArgumentException e) {
-            System.out.println("Invalid flat type.");
+            System.out.println(Colour.RED + "Invalid flat type." + Colour.RESET);
         }
     }
 
@@ -106,7 +107,7 @@ public class ManagerGenerateReport implements IManagerGenerateReport{
                 }
             }
         } catch (IllegalArgumentException e) {
-            System.out.println("Invalid marital status.");
+            System.out.println(Colour.RED + "Invalid marital status." + Colour.RESET);
         }
         printReport(filtered);
     }

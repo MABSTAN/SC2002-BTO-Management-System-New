@@ -7,6 +7,7 @@ import java.util.Scanner;
 import entity.*;
 import utils.BackButton;
 import utils.ClearScreen;
+import utils.Colour;
 import container.*;
 import controller.manager.template.*;
 public class ManagerController {
@@ -72,7 +73,7 @@ public class ManagerController {
             }
             catch(InputMismatchException e){
                 ClearScreen.clear();
-                System.out.println("Please input an integer!");
+                System.out.println(Colour.RED + "Please input an integer!" + Colour.RESET);
                 BackButton.goBack();
                 scanner.nextLine();
                 continue;
@@ -92,7 +93,7 @@ public class ManagerController {
                 case 10:
                     Project activeProject = manager.getActiveProject();
                     if (activeProject == null) {
-                        System.out.println("You are not currently handling any active project.");
+                        System.out.println(Colour.RED + "You are not currently handling any active project." + Colour.RESET);
                     } else {
                         registrationManager.manageRegistration(activeProject);
                     }
@@ -105,14 +106,13 @@ public class ManagerController {
                 case 16:
                     /* Logic for Password change here */
                     PasswordService.changePassWord(manager);
-                    BackButton.goBack();
                     return;
                 case 17:
                     System.out.println("Logging out...");
                     BackButton.goBack();
                     return;
                 default:
-                    System.out.println("Invalid choice! Please enter a valid option");
+                    System.out.println(Colour.RED + "Invalid choice! Please enter a valid option" + Colour.RESET);
             }
             BackButton.goBack();
         }

@@ -1,6 +1,8 @@
 package controller.manager.helper;
 import container.*;
 import entity.*;
+import utils.Colour;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 import controller.manager.template.IManagerManageWithdrawal;
@@ -19,7 +21,7 @@ public class ManagerManageWithdrawal implements IManagerManageWithdrawal{
         ArrayList<Withdrawal> pendingWithdrawals = withdrawalList.getPendingWithdrawalsByProject(project);
 
         if (pendingWithdrawals.isEmpty()) {
-            System.out.println("No pending withdrawals for this project.");
+            System.out.println(Colour.RED + "No pending withdrawals for this project." + Colour.RESET);
             return;
         }
 
@@ -33,12 +35,12 @@ public class ManagerManageWithdrawal implements IManagerManageWithdrawal{
         try {
             choice = Integer.parseInt(scanner.nextLine()) - 1;
         } catch (NumberFormatException e) {
-            System.out.println("Invalid input.");
+            System.out.println(Colour.RED + "Invalid input." + Colour.RESET);
             return;
         }
 
         if (choice < 0 || choice >= pendingWithdrawals.size()) {
-            System.out.println("Invalid choice.");
+            System.out.println(Colour.RED + "Invalid choice." + Colour.RESET);
             return;
         }
 
@@ -68,12 +70,12 @@ public class ManagerManageWithdrawal implements IManagerManageWithdrawal{
             // Change status to unsuccessful and clear currentApplication
             application.setApplicationStatus(Application.ApplicationStatus.UNSUCCESSFUL);
 
-            System.out.println("Withdrawal approved. Application marked as UNSUCCESSFUL.");
+            System.out.println(Colour.GREEN + "Withdrawal approved." + Colour.RESET + "Application marked as UNSUCCESSFUL.");
         } else if (action.equals("2")) {
             withdrawal.setWithdrawalStatus(Withdrawal.WithdrawalStatus.REJECTED);
-            System.out.println("Withdrawal rejected.");
+            System.out.println(Colour.RED + "Withdrawal rejected." + Colour.RESET);
         } else {
-            System.out.println("Invalid action.");
+            System.out.println(Colour.RED + "Invalid action." + Colour.RESET);
         }
     }
 

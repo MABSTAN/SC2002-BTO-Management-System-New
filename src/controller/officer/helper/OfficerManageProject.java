@@ -1,6 +1,7 @@
 package controller.officer.helper;
 import container.*;
 import entity.*;
+import utils.Colour;
 import controller.officer.template.IOfficerManageProject;
 public class OfficerManageProject implements IOfficerManageProject{
     private Officer officer;
@@ -15,7 +16,7 @@ public class OfficerManageProject implements IOfficerManageProject{
         Project assignedProject = officer.getAssignedProject();
 
         if (assignedProject == null) {
-            System.out.println("You are not assigned to any project.");
+            System.out.println(Colour.RED + "You are not assigned to any project." + Colour.RESET);
             return;
         }
 

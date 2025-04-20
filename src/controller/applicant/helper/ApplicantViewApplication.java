@@ -1,6 +1,7 @@
 package controller.applicant.helper;
 import container.*;
 import entity.*;
+import utils.Colour;
 import controller.applicant.template.IApplicantViewApplication;
 public class ApplicantViewApplication implements IApplicantViewApplication{
     private Applicant applicant;
@@ -18,7 +19,7 @@ public class ApplicantViewApplication implements IApplicantViewApplication{
             System.out.println("Status: " + application.getApplicationStatus());
         }
         else{
-            System.out.println("No Application found.");
+            System.out.println(Colour.RED + "No Application found." + Colour.RESET);
         }
 
     }
