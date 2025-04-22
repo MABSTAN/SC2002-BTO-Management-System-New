@@ -148,8 +148,8 @@ Ensure these are placed in the `data/` directory.
       </a>
     </td>
     <td align="center">
-      <a href="https://github.com/vanillatte11037">
-        <img src="https://github.com/vanillatte11037.png" width="100" height="100" style="border-radius: 50%;"><br />
+      <a href="https://github.com/MABSTAN">
+        <img src="https://github.com/MABSTAN.png" width="100" height="100" style="border-radius: 50%;"><br />
         <sub><b>Mabel</b></sub>
       </a>
     </td>
